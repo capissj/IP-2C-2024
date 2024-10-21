@@ -206,24 +206,56 @@ def viaje_a_aristoteles(partida: int):
 """
 #Punto 8
 x=5 ; y=7; x = x + y
+x@a == 5 ; y@a == 7 ; x@b = x@a + y@a
 
 x=5 ; y=7 ; z=x+y; y = z * 2
+x@a == 5 ; y@a == 7 ; z = x@a + y@a ; y@b = z * 2
 
 x=5 ; y=7 ; x="hora"; y = x * 2
+x@a == 5 ; y@a == 7 ; x@b == "hora" ; y@b == x@b * 2
 
 x=False ; res=not(x)
+x@a == False ; res = not(x@a)
 
 x=False ; x=not(x)
+x@a == False ; x@b == not(x@a)
 
 x=True ; y=False ; res=x and y; x = res and x
-
+x@a == True ; y@a == False ; res = x@a && y@a ; x@b == res && x@a
 """
 #Punto 9
 def rt(x: int, g: int) -> int:
-    g = g + 1
-    return x + g
-g: int = 0
-def ro(x: int) -> int:
-    global g
-    g = g + 1
-    return x + g
+    # estado a
+    g = g + 1 # estado b, g = g@a + 1
+    return x + g # x@a + g@b
+g: int = 0 # estado a
+def ro(x: int) -> int: # estado b
+    global g 
+    g = g + 1 # estado c, g = g@a + 1
+    return x + g # x@b + g@c
+
+"""
+el resultado será 4, ya que esta funcion modifica la variable global g a medida que la vayamos llamando:
+asi:
+ro(1) -> 2 (g vale 0)
+ro(1) -> 3 (g vale 1)
+ro(1) -> 4 (g vale 2)
+
+por otro lado, en el caso de la funcion rt, al evaluarla con rt(1,0) va a devolver 2 siempre, ya que la variable g es una variable local:
+asi:
+rt(1) -> 2 (g vale 0)
+rt(1) -> 2 (g vale 0)
+rt(1) -> 2 (g vale 0)
+"""
+#Punto 9 4
+"""
+problema rt(in x: Z, in g: Z): Z{
+    requiere{True}
+    asegura{res = x + (g+1)}
+}
+
+problema ro(in x: Z): Z{
+    requiere{True}
+    asegura{ res = x + (g@a + 1)}
+}
+"""
