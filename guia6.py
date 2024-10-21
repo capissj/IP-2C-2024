@@ -203,3 +203,27 @@ def viaje_a_aristoteles(partida: int):
     llegada: int = - 384
     for i in range(partida, llegada, -20):
         print("Viajó 20 años al pasado, estamos en el año:", i)
+"""
+#Punto 8
+x=5 ; y=7; x = x + y
+
+x=5 ; y=7 ; z=x+y; y = z * 2
+
+x=5 ; y=7 ; x="hora"; y = x * 2
+
+x=False ; res=not(x)
+
+x=False ; x=not(x)
+
+x=True ; y=False ; res=x and y; x = res and x
+
+"""
+#Punto 9
+def rt(x: int, g: int) -> int:
+    g = g + 1
+    return x + g
+g: int = 0
+def ro(x: int) -> int:
+    global g
+    g = g + 1
+    return x + g
