@@ -2,9 +2,9 @@ import math
 #Punto 1 1
 def pertenece(lista:list[int], x:int) -> bool:
     return lista.count(x) != 0
-def pertenece2(lista:list[int], x:int) -> bool:
+def pertenece2(s:list[int], x:int) -> bool:
     for i in range(len(s)):
-        if lista[i] == 0:
+        if s[i] == x:
             return True
     return False
 #Punto 1 2
