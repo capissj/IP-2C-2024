@@ -14,14 +14,14 @@ def divide_a_todos(s:list[int], e:int) -> bool:
             return False
             break
     return True
-print (divide_a_todos([2,4,6,8,10],2))
-
 #Punto 1 3
 def suma_total(lista:list) -> int:
     suma:int = 0
     for i in lista:
         suma += i
     return suma
+#Punto 1 4
+
 #Punto 2 1
 def ceros_en_posiciones_pares(s:list[int]):
     for i in range(len(s)):
