@@ -10,8 +10,11 @@ def pertenece2(lista:list[int], x:int) -> bool:
 #Punto 1 2
 def divide_a_todos(s:list[int], e:int) -> bool:
     for i in s:
-        return i % e == 0
-
+        if i % e != 0:
+            return False
+            break
+    return True
+print (divide_a_todos([2,4,6,8,10],2))
 
 #Punto 1 3
 def suma_total(lista:list) -> int:
