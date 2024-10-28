@@ -73,9 +73,17 @@ def jugar_carton_de_bingo(carton: list[int], bolillero: Cola[int]) -> int:
             contador += 1
             cAux.put(bola)
     return contador
+def calcular_promedio(alumno: str, notas:list[tuple[str, float]]) -> float:
+    cant_notas: int = 0
+    suma_notas: int = 0
+    for nota in notas:
+        if nota[0] == alumno:
+            cant_notas += 1
+            suma_notas += notas[1]
+    return suma_notas / cant_notas
 def calcular_promedio_por_estudiante(notas : list[tuple[str, float]]) -> dict[str, float]:
     d : dict[str, float] = {}
     for tupla in notas:
-        if tupla[0] in d:
-            
-        else:
+        if not tupla[0] in d:
+            d(tupla[0]) = calcular_promedio(tupla[0], notas)
+    return d
