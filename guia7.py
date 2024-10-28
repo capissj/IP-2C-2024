@@ -67,6 +67,13 @@ def siete_caracteres(s:list[str]) -> bool:
             break
     return resultado
 #Punto 1 10
+#Punto 1 11
+def consecutivos_iguales(s:list[int]) -> bool:
+    for i in range(len(s)):
+        if s[i] == s[i+1] and s[i] == s[i+2]:
+            return True
+    return False
+consecutivos_iguales([1,2,3,4,5,5,6,6,6])
 
 #Punto 2 1
 def ceros_en_posiciones_pares(s:list[int]):
