@@ -15,12 +15,17 @@ def divide_a_todos(s:list[int], e:int) -> bool:
             break
     return True
 #Punto 1 3
+<<<<<<< HEAD
 def suma_total(lista:list[int]) -> int:
+=======
+def suma_total(lista:list) -> int:
+>>>>>>> 65e4e5fa6caeb3a3df9bc44071f6f93627016b72
     suma:int = 0
     for i in lista:
         suma += i
     return suma
 #Punto 1 4
+<<<<<<< HEAD
 def maximo(lista:list[int]) -> int:
     elemento:int = lista[0]
     for i in lista:
@@ -67,6 +72,8 @@ def siete_caracteres(s:list[str]) -> bool:
             break
     return resultado
 #Punto 1 10
+=======
+>>>>>>> 65e4e5fa6caeb3a3df9bc44071f6f93627016b72
 
 #Punto 2 1
 def ceros_en_posiciones_pares(s:list[int]):
