@@ -1,6 +1,18 @@
 from queue import LifoQueue as Pila
+from queue import Queue as Cola
 import random
 # Funciones de la practica
+""" #Pila de prueba, copiar esto y pegar cuando se necesite :P
+pila_prueba = Pila()
+pila_prueba.put(5)
+pila_prueba.put(5)
+pila_prueba.put(8)
+pila_prueba.put(4)
+print (cantidad_elementos(pila_prueba))
+mostrar_pila(pila_prueba)
+"""
+# PILAS
+#Ej 1
 def generar_numero_al_azar(cantidad:int, desde:int, hasta:int) -> Pila[int]:
     p:Pila[int] = Pila()
     for i in range(cantidad):
@@ -15,10 +27,20 @@ def mostrar_pila(p:Pila[int]) -> None:
         s.put(elem)
     while not s.empty():
         p.put(s.get())
+#Ej 2
+def cantidad_elementos(p:Pila) -> int:
+    pAux: Pila = Pila()
+    contador: int = 0
+    while  not p.empty():
+        pAux.put(p.get())
+        contador += 1
+    while not pAux.empty():
+        p.put(pAux.get())
+    return contador
 """
 pila_prueba : Pila[int] = generar_numero_al_azar(2,1,20)
 mostrar_pila (pila_prueba) """
-#Ej 10
+#Ej 3
 def buscar_el_maximo(p:Pila[int]) -> int:
     pAux: Pila[int] = Pila()
     maximo: int = p.get()
@@ -32,15 +54,68 @@ def buscar_el_maximo(p:Pila[int]) -> int:
         p.put(pAux.get())
     return maximo
 """
-pila_ej10 : Pila[int] = Pila()
-pila_ej10.put(1)
-pila_ej10.put(10)
-pila_ej10.put(5)
-pila_ej10.put(78)
-pila_ej10.put(5)
-buscar_el_maximo(pila_ej10)
-mostrar_pila(pila_ej10) """
-from queue import Queue as Cola
+pila_ej3 : Pila[int] = Pila()
+pila_ej3.put(1)
+pila_ej3.put(10)
+pila_ej3.put(5)
+pila_ej3.put(78)
+pila_ej3.put(5)
+buscar_el_maximo(pila_ej3)
+mostrar_pila(pila_ej3) """
+#Ej 4
+def buscar_nota_maximo(p:Pila[tuple[str,int]]) -> tuple[str,int]:
+    pAux: Pila[tuple[str,int]] = Pila()
+    tupla_maxima: tuple[str,int] = p.get()
+    pAux.put(tupla_maxima)
+    while not p.empty():
+        actual: tuple[str,int] = p.get()
+        if tupla_maxima[1] < actual[1]:
+            tupla_maxima = actual
+        pAux.put(actual)
+    while not pAux.empty():
+        p.put(pAux.get())
+    return tupla_maxima
+#Ej 5 no lo entiendo xD
+#Ej 6
+#Ej 7
+def intercalar(p1:Pila, p2:Pila) -> Pila:
+    res: Pila = Pila()
+    pAux1: Pila = Pila()
+    pAux2: Pila = Pila()
+    while not p2.empty():
+        elem1 = p1.get()
+        pAux1.put(elem1)
+        res.put(elem1)
+        elem2 = p2.get()
+        pAux2.put(elem2)
+        res.put(elem2)
+    while not pAux2.empty():
+        p1.put(pAux1.get())
+        p2.put(pAux2.get())
+    return res
+"""
+pila_prueba = Pila()
+pila_prueba.put(5)
+pila_prueba.put(5)
+pila_prueba.put(8)
+pila_prueba.put(4)
+pila_prueba2 = Pila()
+pila_prueba2.put(10)
+pila_prueba2.put(15)
+pila_prueba2.put(25)
+pila_prueba2.put(35)
+intercalar(pila_prueba, pila_prueba2)
+mostrar_pila(pila_prueba) """
+# COLAS je
+# El print comun y corriente no funciona, asi que creo uno que se llama "mostrar_cola"
+def mostrar_cola(c:Cola[int]) -> None:
+    s: Cola[int] = Cola()
+    while not c.empty():
+        elem:int = c.get()
+        print (elem)
+        s.put(elem)
+    while not s.empty():
+        c.put(s.get())
 #Bingo
 def armar_secuencia_de_bingo() -> Cola[int]:
     c: Cola[int] = Cola()
@@ -59,7 +134,7 @@ def pertenece(s:list[int], x:int) -> bool:
     for i in range(len(s)):
         if s[i] == x:
             return True
-    return False           
+    return False
 def jugar_carton_de_bingo(carton: list[int], bolillero: Cola[int]) -> int:
     cAux: Cola[int] = Cola()
     contador: int = 0
@@ -73,6 +148,7 @@ def jugar_carton_de_bingo(carton: list[int], bolillero: Cola[int]) -> int:
             contador += 1
             cAux.put(bola)
     return contador
+# Diccionarios?
 def calcular_promedio(alumno: str, notas:list[tuple[str, float]]) -> float:
     cant_notas: int = 0
     suma_notas: int = 0
@@ -81,9 +157,11 @@ def calcular_promedio(alumno: str, notas:list[tuple[str, float]]) -> float:
             cant_notas += 1
             suma_notas += notas[1]
     return suma_notas / cant_notas
+"""
 def calcular_promedio_por_estudiante(notas : list[tuple[str, float]]) -> dict[str, float]:
     d : dict[str, float] = {}
     for tupla in notas:
         if not tupla[0] in d:
             d(tupla[0]) = calcular_promedio(tupla[0], notas)
     return d
+"""
