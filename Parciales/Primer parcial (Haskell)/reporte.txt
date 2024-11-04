@@ -1,0 +1,311 @@
+Parcial - tema2
+
+Nota: 7.32 / 10.0 (APROBADO)
+
+puntaje ej1: 2
+puntaje ej2: 0.4
+puntaje ej3: 1.73
+puntaje ej4: 2.19
+puntaje ej5: 1
+
+Enunciado
+Parcial Haskell - Tema 2
+
+    Resolver los siguientes ejercicios cuyas especificaciones en lenguaje semiformal figuran a continuación. Deben ser implementadas en Haskell utilizando los tipos requeridos y solamente las funciones que se ven en la materia Introducción a la Programación / Algoritmos y Estructuras de Datos I (FCEyN-UBA).
+    Ejercicio 1 (2 puntos)
+
+    problema mediaMovilN (lista: seq⟨Z⟩, n: Z) : Float {
+      requiere: {|lista| > 0}
+      requiere: {n > 0 ∧ n ≤ |lista|}
+      asegura: {res es el promedio de los últimos n elementos de lista}
+    }
+    Ejercicio 2 (2 puntos)
+
+    problema esAtractivo (n: Z) : Bool {
+      requiere: {n > 0}
+      asegura: {res = true <=> la cantidad de factores primos de n (distintos o no) es también un número primo.}
+    }
+
+    Aclaración: los factores primos de 30 son [5,3,2]. Los factores primos de 9 son [3,3].
+    Ejercicio 3 (2 puntos)
+
+    problema palabraOrdenada (palabra: seq⟨Char⟩) : Bool {
+      requiere: {True}
+      asegura: {res = true <=> cada uno de los elementos no blancos de palabra es mayor o igual al anterior caracter no blanco, si existe alguno.}
+    }
+
+    Aclaración: 'a' < 'b' es True.
+    Ejercicio 4 (3 puntos)
+
+    problema similAnagrama (palabra1: seq⟨Char⟩, palabra2: seq⟨Char⟩) : Bool⟩{
+      requiere: {True}
+      asegura: {res = true <=> (para todo caracter no blanco, la cantidad de apariciones de ese caracter en palabra1 es igual a la cantidad de apariciones en palabra2, y además existe al menos un caracter en palabra1 que tiene una posición distinta en palabra2)}
+    }
+    Ejercicio 5 (1 punto)
+
+    Conteste marcando la opción correcta. ¿Cuándo se dice que una especificación está sub-especificada?:
+    Cuando se da una precondición más restrictiva de lo realmente necesario, o bien una postcondición más débil de la que se necesita. XXX
+    Cuando se da una precondición más débil de lo realmente necesario, o bien una postcondición más restrictiva de la que se necesita.
+    Cuando no hay precondiciones (o la precondición es True).
+Ejecucion de los tests
+tema2-test-ej1.hs.compilacion.out
+
+Puntaje del ej: 2 / 2
+
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+Cases: 6  Tried: 6  Errors: 0  Failures: 0
+
+tema2-test-ej2.hs.compilacion.out
+
+Puntaje del ej: 0.4 / 2
+
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+### Failure in: 0:"esAtractivo con n=15 y m\225s de un divisor primo, con res = True"
+Tema2-test-ej2-test6.hs:16
+expected: True
+ but got: False
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+
+
+
+### Failure in: 0:"esAtractivo con n=18 divisible por un primo elevado a un n\250mero q>1, q primo, y esAtractivo n = True"
+Tema2-test-ej2-test5.hs:16
+expected: True
+ but got: False
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+
+
+
+### Failure in: 0:"esAtractivo con n=9 igual a un primo elevado a un n\250mero q>1, q primo"
+Tema2-test-ej2-test3.hs:16
+expected: True
+ but got: False
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+### Failure in: 0:"esAtractivo con n=2, 1 s\243lo divisor primo"
+Tema2-test-ej2-test2.hs:16
+expected: False
+ but got: True
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+
+
+Cases: 7  Tried: 7  Errors: 0  Failures: 4
+
+tema2-test-ej3.hs.compilacion.out
+
+Puntaje del ej: 1.73 / 2
+
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+### Error in:   0:palabraOrdenada con |palabra| = 0
+Solucion.hs:(51,1)-(54,44): Non-exhaustive patterns in function palabraOrdenada
+
+
+Cases: 1  Tried: 1  Errors: 1  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+### Error in:   0:palabraOrdenada con |palabra| > 0 pero solo espacios
+Solucion.hs:(51,1)-(54,44): Non-exhaustive patterns in function palabraOrdenada
+
+
+Cases: 1  Tried: 1  Errors: 1  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+Cases: 15  Tried: 15  Errors: 2  Failures: 0
+
+tema2-test-ej4.hs.compilacion.out
+
+Puntaje del ej: 2.19 / 3
+
+
+
+
+### Failure in: 0:similAnagrama |palabra1| = |palabra2| solo espacios blancos no es similAnagrama
+Tema2-test-ej4-test3.hs:16
+expected: False
+ but got: True
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+
+
+
+### Error in:   0:similAnagrama palabra1 vacia
+Solucion.hs:(64,1)-(68,47): Non-exhaustive patterns in function similAnagrama
+
+
+Cases: 1  Tried: 1  Errors: 1  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+### Failure in: 0:similAnagrama Falso porque son identicos
+Tema2-test-ej4-test4.hs:16
+expected: False
+ but got: True
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 1
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+Cases: 1  Tried: 1  Errors: 0  Failures: 0
+
+
+
+### Error in:   0:similAnagrama palabra2 vacia
+Solucion.hs:(64,1)-(68,47): Non-exhaustive patterns in function similAnagrama
+
+
+Cases: 1  Tried: 1  Errors: 1  Failures: 0
+
+
+Cases: 15  Tried: 15  Errors: 2  Failures: 2
+
+mchoice.json-ej5.compilacion.out
+
+Puntaje del ej: 1 / 1
+
+mchoice ej5: respuesta del alumno=1, respuesta correcta=1
+
+Ran 1 test in 0 seconds
+
+OK
+
+FIN
