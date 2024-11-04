@@ -149,6 +149,50 @@ def jugar_carton_de_bingo(carton: list[int], bolillero: Cola[int]) -> int:
             cAux.put(bola)
     return contador
 # Diccionarios?
+# Ej 16
+def agrupar_por_longitud(nombre_archivo: str) -> dict:
+    res: dict[int, int] = ()
+
+    archivo: TextIO = open(nombre_archivo, "r")
+    contenido : list[str] = archivo.readlines()
+    archivo.close()
+
+    for line in contenido:
+        palabras_lista: list[str] = palabras(line)
+        for p in palabras_lista:
+            largo: int = len(p)
+            if pertenece(list(res.keys()), largo):
+                res[largo] = res[largo] + 1
+            else:
+                res[largo] = 1
+
+    return res
+def palabras(s:list[str]) -> list[str]:
+    return s.split(" ") #TODO implementar
+# Ej 18
+def la_palabra_mas_frecuente(nombre_archivo: str) -> str:
+    res: dict [str, int] = ()
+
+    archivo: TextIO = open(nombre_archivo, "r")
+    contenido : list[str] = archivo.readlines()
+    archivo.close()
+
+    for linea in contenido:
+        palabras_lista: list[str] = palabras(linea)
+
+        for p in palabras_lista:
+            if pertenece (list(res.keys()),p):
+                res[p] = res[p] + 1
+            else:
+                res[p] = 1
+    maximo: int = 0
+    mas_frecuente: str = ""
+    for key, value in res:
+        if value > maximo:
+            maximo = value
+            mas_frecuente = key
+
+    return mas_frecuente
 def calcular_promedio(alumno: str, notas:list[tuple[str, float]]) -> float:
     cant_notas: int = 0
     suma_notas: int = 0
@@ -165,3 +209,23 @@ def calcular_promedio_por_estudiante(notas : list[tuple[str, float]]) -> dict[st
             d(tupla[0]) = calcular_promedio(tupla[0], notas)
     return d
 """
+#Archivos
+# Ej 21 1
+def contar_linea(nombre_archivo: str) -> int:
+    res:int = 0
+    archivo = open(nombre_archivo, "r")
+    contenido: list[str] = archivo.readlines()
+    archivo.close()
+    res = len(contenido)
+    return res
+# Ej 22 
+"""
+def clonar_sin_comentarios(nombre_archivo_entrada: str) -> str:
+    nombre_archivo_salida: str = "salida.txt"
+    archivo: TextIO = open(nombre_archivo_entrada, "r")
+    contenido: list[str] = archivo.readlines()
+    for i in range(len(contenido)):
+        linea: str = archivo.realine()
+        for n in linea:
+            if n == "#":
+                """
