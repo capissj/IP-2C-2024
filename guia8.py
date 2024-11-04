@@ -1,5 +1,6 @@
 from queue import LifoQueue as Pila
 from queue import Queue as Cola
+from typing import TextIO
 import random
 # Funciones de la practica
 """ #Pila de prueba, copiar esto y pegar cuando se necesite :P
