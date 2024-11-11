@@ -30,11 +30,6 @@ contenido :: (Eq t) => t -> [t] -> Bool -- Te dice si un elemento pertenece a un
 contenido _ [] = False
 contenido e (x:xs) | e == x = True
                    | otherwise = contenido e xs
-{-
-verificarRepetidos :: AgenciaDeViajes -> Bool -- Chequea que no haya repetidos en una lista
-verificarRepetidos [x] = True
-verificarRepetidos (x:xs) | contenido x xs = False
-                          | otherwise = verificarRepetidos xs -} -- No hace falta verificarRepetidos en el ejercicio 1, ya que vuelosChequeados ya cumple esa condicion :)
 
 chequeoVuelo :: Vuelo -> AgenciaDeViajes -> Bool -- Verifica que si hay dos vuelos iguales con distinta o igual duracion no los cuente
 chequeoVuelo (_,_,_) [] = True
@@ -87,7 +82,7 @@ mejoraDeVuelo (x,y,z) = (x,y,z - 1/10 *z)
 
 -- EJERCICIO 4
 ciudadMasConectada :: AgenciaDeViajes -> Ciudad -- Indica cual es la ciudad mas conectada
-ciudadMasConectada [] = "Racing 4 - Paranaense 1"
+ciudadMasConectada [] = "Lista vacía"
 ciudadMasConectada agencia = maximoTuplas (tuplaDeCiudades agencia)
 --Funciones auxiliares ej 4
 
@@ -175,5 +170,7 @@ buscaVuelo (x:xs) c d | (origen x == c) && (destino x == d) = x
 
 -- EJERCICIO 7
 puedoVolverAOrigen :: AgenciaDeViajes -> Ciudad -> Bool -- Verifica si se puede volver a la ciudad de origen
-puedoVolverAOrigen agencia origen = True
--- No lo puedo resolver :( 
+puedoVolverAOrigen agencia origen = False
+
+
+-- Funciones auxiliares ej 7

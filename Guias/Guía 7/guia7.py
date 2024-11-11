@@ -192,3 +192,4 @@ def filas_ordenadas(m:list[list[int]], res:list[bool]):
         res.append(ordenados(i))
     return res
 #Punto 6 3
+#Punto 7 1
