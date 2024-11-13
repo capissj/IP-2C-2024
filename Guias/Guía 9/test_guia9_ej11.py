@@ -26,7 +26,7 @@ class FuncionesTest(unittest.TestCase):
         self.assertEqual(triangle(0, 0, 0), 4, "séptimo test con a, b y c inválidos")
 
     def test_8(self):
-        self.assertEqual(triangle(5, 10, 15), 3, "octavo test triángulo con los tres lados de distinta logitud")
+        self.assertEqual(triangle(20, 10, 15), 3, "octavo test triángulo con los tres lados de distinta logitud")
 
     def test_9(self):
         self.assertEqual(triangle(10, 10, 10), 1, "noveno test triángulo con los tres lados iguales")
@@ -39,8 +39,6 @@ class FuncionesTest(unittest.TestCase):
     
     def test_12(self):
         self.assertEqual(triangle(5, 15, 15), 2, "doceavo test con b y c iguales")
-    
-    
-
+# Faltan los casos en que se cumplen la desigualdad triangular :P
 if __name__ == '__main__':
     unittest.main(verbosity=2)
