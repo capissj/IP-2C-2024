@@ -168,9 +168,34 @@ buscaVuelo (x:xs) c d | (origen x == c) && (destino x == d) = x
                       | otherwise = buscaVuelo xs c d
 
 
--- EJERCICIO 7
-puedoVolverAOrigen :: AgenciaDeViajes -> Ciudad -> Bool -- Verifica si se puede volver a la ciudad de origen
-puedoVolverAOrigen agencia origen = False
+-- EJERCICIO 7 (Cumpliendo las restricciones)
+puedoVolverAOrigen :: AgenciaDeViajes -> Ciudad -> Bool
+puedoVolverAOrigen [] origen = False
+puedoVolverAOrigen agencia origenCiudad | not (vuelosValidos agencia) = False
+                                        | otherwise = dfs origenCiudad [origenCiudad]
+                                          where
+                                                dfs actual visitados =
+                                                   (actual == origenCiudad && length visitados > 1) ||
+                                                   tieneCamino conexiones visitados
+                                                   where
+                                                   conexiones = [ciudadDestino vuelo | vuelo <- agencia, ciudadOrigen vuelo == actual, not (elem (ciudadDestino vuelo) visitados)]
+                                                   tieneCamino [] _ = False
+                                                   tieneCamino (x:xs) visitados = dfs x (x : visitados) || tieneCamino xs visitados
+
+-- Funciones auxiliares específicas para este ejercicio
+ciudadOrigen :: Vuelo -> Ciudad
+ciudadOrigen (origen, _, _) = origen
+
+ciudadDestino :: Vuelo -> Ciudad
+ciudadDestino (_, destino, _) = destino
+
 
 
 -- Funciones auxiliares ej 7
+eliminarVuelo :: AgenciaDeViajes -> Vuelo -> AgenciaDeViajes
+eliminarVuelo [] _ = []
+eliminarVuelo (x:xs) vuelo | (x == vuelo) = eliminarVuelo xs vuelo
+                           | otherwise = [x] ++ eliminarVuelo xs vuelo
+
+-- Funciones útiles: interseccion, ciudadesConectadas, buscaVuelo, deDondeSale, aDondeLlega, escalas, sePuedeLlegar y eliminarVuelo
+
