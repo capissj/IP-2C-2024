@@ -1,4 +1,4 @@
-module Submission where
+module SolucionT2 where
 --Funciones utiles :D
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece e [] = False
@@ -6,7 +6,6 @@ pertenece e (x:xs) | e == x = True
                    | otherwise = pertenece e xs
 
 chequeoRepetidos :: [(String, String)] -> Bool
-chequeoRepetidos [] = True
 chequeoRepetidos [x] = True
 chequeoRepetidos (x:y:xs) | x == y = False
                           | otherwise = chequeoRepetidos (y:xs)
@@ -41,18 +40,18 @@ quitarTuplas (x:xs) | not (tuplaValida x) = quitar x (quitarTuplas xs)
                     | otherwise = [x] ++ quitarTuplas xs 
 
 relacionesValidas :: [(String, String)] ->  Bool
-relacionesValidas [] = True 
+relacionesValidas [] = False 
 relacionesValidas (x:xs) | chequeoRepetidos xs && tuValidas xs = True
                          | otherwise = False
 
 personas :: [(String, String)] -> [String]
-personas [] = [] 
+personas [] = ["nadie"] 
 personas (x:xs) = personas(quitarTuplas (eliminarRepetidos (x:xs)))
  
 
 amigosDe :: String -> [(String, String)] -> [String]
 amigosDe "nadie" [] = ["nadie"] 
-
+amigosDe e (x:xs) 
 
 personaConMasAmigos :: [(String, String)] -> String
 personaConMasAmigos [] = "yo" 

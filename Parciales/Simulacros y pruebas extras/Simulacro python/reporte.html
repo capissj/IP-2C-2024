@@ -1,0 +1,475 @@
+<h1>Parcial - tema1</h1>
+<p>Nota: 5.66 / 10.0 (DESAPROBADO)</p>
+<pre><code>puntaje ej1: 0.0
+puntaje ej2: 1.66
+puntaje ej3: 0.4
+puntaje ej4: 1.6
+puntaje ej5: 0.75
+puntaje ej6: 0.5
+puntaje ej7: 0.75
+</code></pre>
+<h2>Datos del alumno</h2>
+<p>Nombre: Valentin Capart</p>
+<p>DNI: 43754372</p>
+<p>LU: </p>
+<p>Maquina: 14-04</p>
+<h2>Enunciado</h2>
+<!doctype html>
+<html>
+<head>
+  <link rel="icon" href="data:,">
+  <link href="css/style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <style>
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .conditions {
+        margin-left: 20px;
+    }
+</style>
+</head>
+
+<body style="width: 50%;margin: 1% auto;">
+
+<div> 
+<h1> Parcial Python (Simulacro) - Tema 1 </h1>
+
+<h2> Importante </h2>
+
+<ul>
+  <li>El parcial se aprueba con 6 puntos</li>
+  <li>Template de funciones a implementar <a href="#" onclick="forceDownload('/parcial/Template_t1.py','Template_t1.py');">acá</a><br></li>
+  <li>Lista de funciones permitidas <a href="/static/python_permitidas.html">acá</a></li>
+  <li>Para testear el código pueden usar <a href="#" onclick="forceDownload('/parcial/tema1-test.py', 'tema1-test.py')">este</a> archivo que ya cuenta con todo lo necesario para desarrollar sus propios tests (este archivo no se entrega)</li>
+</ul>
+
+<form name="form1" action="/submit_examen" method="post" enctype="multipart/form-data" onsubmit="return validaciones(event)">
+
+  <h2> Enunciado </h2>
+
+  <ol>
+   <p>
+    Resolver los siguientes ejercicios cuyas especificaciones figuran a continuación. Deben ser implementadas en Python utilizando los tipos
+    requeridos y solamente las funciones que se ven en la materia Introducción a la Programación / Algoritmos y Estructuras de Datos I (FCEyN-UBA).
+  </p>
+
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">1) Gestión de notas de estudiantes [2 puntos]</h3>
+  <p> 
+    En una escuela llamada "Academia Futura", se desea desarrollar un programa para gestionar las notas de los estudiantes por materia. El programa debe procesar una lista de tuplas donde cada tupla contiene el nombre de un estudiante, el nombre de una materia y la nota final obtenida por el estudiante en esa materia. 
+</p>
+
+<p>Se pide implementar una función en python, que respete la siguiente especificación:</p>
+
+<p> problema gestion_notas (in <i>notas_estudiante_materia</i>: seq⟨(String x String x Z)) :  dict⟨String, seq⟨(String x Z)⟩⟩ {<br>
+  &nbsp; <strong>requiere:</strong> { Las primeras componentes de <i>notas_estudiante_materia</i> tienen longitud mayor estricto a cero}<br>
+  &nbsp; <strong>requiere:</strong> { Las segundas componentes de <i>notas_estudiante_materia</i> tienen longitud mayor estricto a cero}<br>
+  &nbsp; <strong>requiere:</strong> { Las terceras componentes de <i>notas_estudiante_materia</i> están entre 1 y 10, ambos inclusive }<br>
+  &nbsp; <strong>requiere:</strong> { No hay 2 tuplas en <i>notas_estudiante_materia</i> que tengan la primera y segunda componente iguales (mismo estudiante y misma materia) }<br>
+  &nbsp; <strong>asegura:</strong> {<i>res</i> tiene como claves solo los primeros elementos de las tuplas de <i>notas_estudiante_materia</i> (o sea, un estudiante)} <br> 
+  &nbsp; <strong>asegura:</strong> {El valor en <i>res</i> de un estudiante es una lista de tuplas donde cada tupla contiene como primera componente el nombre de la materia y como segunda componente la nota obtenida por el estudiante en esa materia según <i>notas_estudiante_materia</i>}<br>
+  &nbsp; <strong>asegura:</strong> { Para toda clave (estudiante) en <i>res</i>, en su valor (lista de tuplas) no hay 2 tuplas que tengan la misma primera componente (materia) }<br>
+}<br>
+</p>
+
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">2) Cantidad dígitos pares [2 puntos] </h3>
+
+<p>Se pide implementar una función en Python llamada cantidad_digitos_pares que respete la siguiente especificación:</p>
+
+<p> problema cantidad_digitos_pares (in <i>numeros</i>: seq⟨Z⟩) : Z {<br>
+  &nbsp; <strong>requiere:</strong>{Todos los elementos de <i>numeros</i> son mayores iguales a 0}<br>
+  &nbsp; <strong>asegura:</strong> {<i>res</i> es la cantidad total de digitos pares que aparecen en cada uno de los elementos de <i>numeros</i>}<br>
+    }<br>
+</p>
+
+<p>
+Por ejemplo, si la lista de números es [5434, 42, 811, 3139], entonces el resultado esperado sería 5 (los dígitos pares son 4, 4, 4, 2, y 8).</p>
+
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">3) Priorizar cola de paquetes [2 puntos]</h3>
+
+  <p>En una empresa de logística, se manejan paquetes que llegan a una bodega y deben ser procesados para su posterior distribución. Cada paquete está representado por una tupla (id_paquete, peso), donde id_paquete es un identificador único del paquete y peso representa el peso del paquete en kilogramos.</p>
+  <p>Se pide implementar una función en Python llamada reordenar_cola_primero_pesados que respete la siguiente especificación:</p>
+
+<p> problema reordenar_cola_primero_pesados(in <i>paquetes</i>: Cola⟨(String x Z)⟩, in umbral:Z): Cola⟨(String x Z)⟩{<br>
+    &nbsp; <strong>requiere:</strong> {no hay repetidos en las primeras componentes (Ids) de <i>paquetes</i>}<br>
+    &nbsp; <strong>requiere:</strong> {todos las segundas componentes (pesos) de <i>paquetes</i> son mayores estricto a cero}<br>
+    &nbsp; <strong>requiere:</strong> {<i>umbral</i> es mayor o igual a cero}<br>
+    &nbsp; <strong>asegura:</strong> {los elementos de <i>res</i> son exactamente los mismos que los elementos de <i>paquetes</i>}<br>
+    &nbsp; <strong>asegura:</strong> {|<i>res</i>| = |<i>paquetes</i>|}<br>
+    &nbsp; <strong>asegura:</strong> {no hay un elemento en <i>res</i>, cuyo peso sea menor o igual que el <i>umbral</i>, que aparezca primero que otro elemento en <i>res</i> cuyo peso sea mayor que el <i>umbral</i>)}<br>
+    &nbsp; <strong>asegura:</strong> {Para todo paquete <i>p1</i> y paquete <i>p2</i> cuyos pesos son menores o iguales que el <i>umbral</i> y pertenecen a <i>paquetes</i> si <i>p1</i> aparece primero que <i>p2</i> en <i>paquetes</i> entonces <i>p1</i> aparece primero que <i>p2</i> en <i>res</i>}<br>
+    &nbsp; <strong>asegura:</strong> {Para todo paquete <i>p1</i> y paquete <i>p2</i> cuyos pesos son mayores que el <i>umbral</i> y pertenecen a <i>paquetes</i> si <i>p1</i> aparece primero que <i>p2</i> en <i>paquetes</i> entonces <i>p1</i> aparece primero que <i>p2</i> en <i>res</i>}<br>
+
+  }<br>
+  </p>
+
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">4) Matriz pseudo ordenada [2 puntos]</h3>
+
+
+  <p>Se desea verificar si una matriz está pseudo ordenada por columnas. Esto es que el mínimo de cada columna sea menor estricto que el mínimo de la columna siguiente</p>   
+  <p>
+  Para ello se pide desarrollar una función en Python que implemente esta idea respetando la siguiente especificación:
+  </p>
+
+<p> matriz_pseudo_ordenada (in <i>matriz</i>: seq⟨seq⟨Z⟩⟩): Bool
+{<br>
+&nbsp; <strong>requiere:</strong> {|<i>matriz</i>| > 0} <br>
+&nbsp; <strong>requiere:</strong> {|<i>matriz</i>[0]| > 0} <br>
+&nbsp; <strong>requiere:</strong> {todos los elementos de <i>matriz</i> tienen la misma longitud} <br>
+&nbsp; <strong>asegura:</strong> {<i>res</i> es igual a True <=> para todo 0<=i<|<i>matriz</i>[0]|-1, el mínimo de la columna i de <i>matriz</i> < el mínimo de la columna i + 1 de <i>matriz</i> }<br>
+  }<br>
+  </p>
+
+
+<hr style="width: 100%;">
+  <h3 style="color:#1A5276">5) Preguntas teóricas (2 puntos)</h3>
+
+  <p>Conteste marcando la opción correcta.</p>
+
+  <h4 style="color:#1A5276">A) ¿Cuál es el principal objetivo del testing de caja blanca? (0.75 punto)</h4>
+
+  <p>
+   <input type="radio" name="mchoice_1" id="Aopcion1" value="1" />
+       <label for="Aopcion1">Evaluar la funcionalidad del software desde la perspectiva del usuario final.</label> <br>
+   <input type="radio" name="mchoice_1" id="Aopcion2" value="2" />
+       <label for="Aopcion2">Verificar la lógica interna del código, estructuras de control, condiciones y flujo de datos.</label> <br>
+   <input type="radio" name="mchoice_1" id="Aopcion3" value="3" />
+       <label for="Aopcion3">Garantizar que la interfaz de usuario sea intuitiva y fácil de usar.</label> <br>
+   </p>
+
+
+      <h4 style="color:#1A5276">B) ¿Qué es un "alcance" (scope) en Python? (0.5 punto)</h4>
+
+     <p>
+      <input type="radio" name="mchoice_2" id="Bopcion1" value="1" />
+          <label for="Bopcion1">El contexto en el cual una variable es accesible.</label> <br>
+      <input type="radio" name="mchoice_2" id="Bopcion2" value="2" />
+          <label for="Bopcion2">El número de variables definidas en un programa.</label> <br>
+      <input type="radio" name="mchoice_2" id="Bopcion3" value="3" />
+          <label for="Bopcion3">El número de funciones definidas en un programa.</label> <br>
+      </p>
+
+    <h4 style="color:#1A5276">C) ¿Cuál es la principal diferencia entre una lista y una tupla en Python? (0.75 punto)</h4>
+
+  <p>
+   <input type="radio" name="mchoice_3" id="Copcion1" value="1" />
+       <label for="Copcion1">Las listas permiten agregar y eliminar elementos después de su creación, mientras que las tuplas no.</label> <br>
+   <input type="radio" name="mchoice_3" id="Copcion2" value="2" />
+       <label for="Copcion2">Las listas se ordenan automáticamente, mientras que las tuplas mantienen el orden de inserción.</label> <br>
+   <input type="radio" name="mchoice_3" id="Copcion3" value="3" />
+       <label for="Copcion3">Las listas pueden contener elementos duplicados y las tuplas no.</label> <br>
+   </p>
+
+
+  <hr style="width: 100%;">
+  <h3 style="color:#1A5276">Adjunta el archivo con tu solución:</h3>
+  <p><b style="color:red">Solo se puede adjuntar 1 archivo de extensión .py. En caso de haber desarrollado tests propios, no deben ser entregados.</b></p>
+
+  <label for="archivo">Seleccionar archivo a enviar:</label>
+  <input type="file" id="archivo" name="archivo" required accept=".py,text/x-python"/>
+
+  <input type="submit" value="Enviar"
+        style= "background-color: #1A5276; border-radius: 5px;
+                margin-top:10px;padding: 10px 150px;color: #FFFFFF;
+                font-size: 20px;cursor: pointer; width:100%" >
+
+</form>
+</div>
+<script>
+  function validaciones(event) {
+    // Obtiene todos los inputs tipo radio del formulario
+      const radioGroups = document.querySelectorAll('input[type="radio"]');
+      const groupedByName = {};
+
+      // Agrupar radios por su atributo name
+      radioGroups.forEach(radio => {
+        if (!groupedByName[radio.name]) {
+          groupedByName[radio.name] = [];
+        }
+        groupedByName[radio.name].push(radio);
+      });
+
+      // Verificar que cada grupo de radios tenga al menos uno seleccionado
+      for (const groupName in groupedByName) {
+        const radios = groupedByName[groupName];
+        const isChecked = radios.some(radio => radio.checked);
+
+        if (!isChecked) {
+          alert(`Debes seleccionar una opción para la pregunta ${groupName}`);
+          return false; // Detener la validación si falta alguna opción
+        }
+      }
+
+      var confirmacion = confirm("Confirmo que revisé mis respuestas y que quiero entregar mi examen");
+      if (!confirmacion) {
+          event.preventDefault();
+          event.returnValue = false;
+          return false;
+        }
+        event.returnValue = true;
+        return true;
+    }
+
+// registro una funcion para mostrar el archivo cuando se adjunta.
+// de esa forma evitamos que se adjunten otros archivos por error
+document
+  .getElementById('archivo')
+  .addEventListener(
+      'change',
+      function () {
+          var fr = new FileReader();
+          fr.onload = function () {
+              alert(this.result);
+          };
+          fr.readAsText(this.files[0]);
+      }
+  );
+
+// para forzar a bajar el template de pytest y que no se pueda abrir en un nuevo tab
+// (el browser intenta mostrar el codigo como HTML y el formato se ve raro)
+function forceDownload(url, filename) {
+  fetch(url).then(function(t) {
+    return t.blob().then((b) => {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(b);
+      a.setAttribute("download", filename);
+      a.click();
+    });
+  });
+}
+</script>
+</body>
+
+</html>
+
+<h2>Solucion entregada por el alumno</h2>
+<pre><code>from queue import Queue as Cola
+import math
+# Ejercicio 1
+def gestion_notas(notas_estudiante_materia: list[tuple[str, str, int]]) -&gt; dict[str, list[tuple[str,int]]]:
+    return {} 
+
+# Ejercicio 2
+def cantidad_digitos_pares(numeros: list[int]) -&gt; int:
+    contador: int = 0
+    for i in numeros:
+        while i &gt; 0:
+            if ultimo_digito(i) % 2 == 0:
+                i = i // 10
+                contador += 1
+            else:
+                i = i // 10
+    return contador
+def cant_digitos(numero: int) -&gt; int:
+    contador: int = 1
+    while numero &gt;= 10:
+        numero = numero // 10
+        contador += 1
+    return contador
+def ultimo_digito(numero: int) -&gt;int:
+    ultimo: int = numero % 10
+    return ultimo
+# Ejercicio 3
+def reordenar_cola_primero_pesados(paquetes: Cola[tuple[str,int]], umbral:int) -&gt; Cola[tuple[str,int]]:
+    res: Cola[tuple[str,int]] = Cola()
+    cola_aux : list[tuple[str,int]] = Cola()
+    lista_aux: list[tuple[str,int]] = []
+    while not paquetes.empty():
+        auxiliar: tuple[str,int] = paquetes.get()
+        cola_aux.put(auxiliar)
+        if auxiliar[1] &gt; umbral:
+            res.put(auxiliar)
+        else:
+            lista_aux += auxiliar
+    while not cola_aux.empty():
+        paquetes.put(cola_aux.get())
+    while len(lista_aux) &gt; 0:
+        res.put(pop(lista_aux))
+    return res
+
+
+# Ejercicio 4
+def matriz_pseudo_ordenada(matriz: list[list[int]]) -&gt; bool:
+    longitud: int = len(matriz)
+    res: bool = True
+    return res
+def ordenados(columna: list[int]) -&gt; bool:
+    res: bool = True
+    for i in range(len(columna)-1):
+        if columna [i] &gt; columna [i+1]:
+            res = False
+            break
+    return res
+print(ordenados([4,4,4]))
+</code></pre>
+<h2>Resultado de la compilacion</h2>
+<pre><code>
+</code></pre>
+<h2>Ejecucion de los tests</h2>
+<h3>tema1-test-ej1.py.compilacion.out</h3>
+<p>Puntaje del ej: 0.0 / 2</p>
+<pre><code>test_notas_minimas_y_maximas (__main__.Ej1Test) ... skipped 'el test no se ejecuto porque la implementacion de la funcion gestion_notas() es la provista por la catedra a modo de ejemplo'
+test_repite_estudiantes (__main__.Ej1Test) ... skipped 'el test no se ejecuto porque la implementacion de la funcion gestion_notas() es la provista por la catedra a modo de ejemplo'
+test_solo_un_estudiante_varias_materias (__main__.Ej1Test) ... skipped 'el test no se ejecuto porque la implementacion de la funcion gestion_notas() es la provista por la catedra a modo de ejemplo'
+test_trivial (__main__.Ej1Test) ... skipped 'el test no se ejecuto porque la implementacion de la funcion gestion_notas() es la provista por la catedra a modo de ejemplo'
+test_un_estudiante (__main__.Ej1Test) ... skipped 'el test no se ejecuto porque la implementacion de la funcion gestion_notas() es la provista por la catedra a modo de ejemplo'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK (skipped=5)
+
+</code></pre>
+<h3>tema1-test-ej2.py.compilacion.out</h3>
+<p>Puntaje del ej: 1.66 / 2</p>
+<pre><code>test_numero_cero (__main__.Ej2Test) ... FAIL
+test_sin_digitos_pares (__main__.Ej2Test) ... ok
+test_todos_digitos_pares (__main__.Ej2Test) ... ok
+test_trivial (__main__.Ej2Test) ... ok
+test_un_numero (__main__.Ej2Test) ... ok
+test_varios_numeros (__main__.Ej2Test) ... ok
+
+======================================================================
+FAIL: test_numero_cero (__main__.Ej2Test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/home/asansone/.local/lib/python3.10/site-packages/timeout_decorator/timeout_decorator.py&quot;, line 82, in new_function
+    return function(*args, **kwargs)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/tema1-test-ej2.py&quot;, line 66, in test_numero_cero
+    self.assertEqual(res, salida)
+AssertionError: 3 != 4
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+FAILED (failures=1)
+
+</code></pre>
+<h3>tema1-test-ej3.py.compilacion.out</h3>
+<p>Puntaje del ej: 0.4 / 2</p>
+<pre><code>test_pesos_iguales_al_umbral (__main__.Ej3Test) ... ERROR
+test_todos_ligeros (__main__.Ej3Test) ... ERROR
+test_trivial (__main__.Ej3Test) ... ok
+test_umbral_cero (__main__.Ej3Test) ... ok
+test_un_paquete (__main__.Ej3Test) ... ERROR
+test_varios_paquetes_variado_peso (__main__.Ej3Test) ... ERROR
+
+======================================================================
+ERROR: test_pesos_iguales_al_umbral (__main__.Ej3Test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/home/asansone/.local/lib/python3.10/site-packages/timeout_decorator/timeout_decorator.py&quot;, line 82, in new_function
+    return function(*args, **kwargs)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/tema1-test-ej3.py&quot;, line 86, in test_pesos_iguales_al_umbral
+    resultado = reordenar_cola_primero_pesados(paquetes, umbral)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/solucion.py&quot;, line 42, in reordenar_cola_primero_pesados
+    res.put(pop(lista_aux))
+NameError: name 'pop' is not defined
+
+======================================================================
+ERROR: test_todos_ligeros (__main__.Ej3Test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/home/asansone/.local/lib/python3.10/site-packages/timeout_decorator/timeout_decorator.py&quot;, line 82, in new_function
+    return function(*args, **kwargs)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/tema1-test-ej3.py&quot;, line 72, in test_todos_ligeros
+    resultado = reordenar_cola_primero_pesados(paquetes, umbral)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/solucion.py&quot;, line 42, in reordenar_cola_primero_pesados
+    res.put(pop(lista_aux))
+NameError: name 'pop' is not defined
+
+======================================================================
+ERROR: test_un_paquete (__main__.Ej3Test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/home/asansone/.local/lib/python3.10/site-packages/timeout_decorator/timeout_decorator.py&quot;, line 82, in new_function
+    return function(*args, **kwargs)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/tema1-test-ej3.py&quot;, line 41, in test_un_paquete
+    res:Cola[tuple[str,int]] = reordenar_cola_primero_pesados(cola_entrada,umbral)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/solucion.py&quot;, line 42, in reordenar_cola_primero_pesados
+    res.put(pop(lista_aux))
+NameError: name 'pop' is not defined
+
+======================================================================
+ERROR: test_varios_paquetes_variado_peso (__main__.Ej3Test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/home/asansone/.local/lib/python3.10/site-packages/timeout_decorator/timeout_decorator.py&quot;, line 82, in new_function
+    return function(*args, **kwargs)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/tema1-test-ej3.py&quot;, line 61, in test_varios_paquetes_variado_peso
+    res:Cola[tuple[str,int]] = reordenar_cola_primero_pesados(cola_entrada,umbral)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/solucion.py&quot;, line 42, in reordenar_cola_primero_pesados
+    res.put(pop(lista_aux))
+NameError: name 'pop' is not defined
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+FAILED (errors=4)
+
+</code></pre>
+<h3>tema1-test-ej4.py.compilacion.out</h3>
+<p>Puntaje del ej: 1.6 / 2</p>
+<pre><code>test_1_columna (__main__.Ej4Test) ... ok
+test_1_fila_true (__main__.Ej4Test) ... ok
+test_3x4_true (__main__.Ej4Test) ... ok
+test_4x3_false (__main__.Ej4Test) ... FAIL
+test_trivial (__main__.Ej4Test) ... ok
+
+======================================================================
+FAIL: test_4x3_false (__main__.Ej4Test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;/home/asansone/.local/lib/python3.10/site-packages/timeout_decorator/timeout_decorator.py&quot;, line 82, in new_function
+    return function(*args, **kwargs)
+  File &quot;./correcciones/simulacro_python/capart_valentin_43754372/tema1-test-ej4.py&quot;, line 50, in test_4x3_false
+    self.assertFalse(res)
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (failures=1)
+
+</code></pre>
+<h3>mchoice.json-ej5.compilacion.out</h3>
+<p>Puntaje del ej: 0.75 / 0.75</p>
+<pre><code>mchoice ej5: respuesta del alumno=2, respuesta correcta=2
+
+Ran 1 test in 0 seconds
+
+OK
+
+</code></pre>
+<h3>mchoice.json-ej6.compilacion.out</h3>
+<p>Puntaje del ej: 0.5 / 0.5</p>
+<pre><code>mchoice ej6: respuesta del alumno=1, respuesta correcta=1
+
+Ran 1 test in 0 seconds
+
+OK
+
+</code></pre>
+<h3>mchoice.json-ej7.compilacion.out</h3>
+<p>Puntaje del ej: 0.75 / 0.75</p>
+<pre><code>mchoice ej7: respuesta del alumno=1, respuesta correcta=1
+
+Ran 1 test in 0 seconds
+
+OK
+
+</code></pre>
+<p>FIN</p>
