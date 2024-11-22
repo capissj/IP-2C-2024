@@ -24,22 +24,22 @@ def cant_digitos(numero: int) -> int:
 def ultimo_digito(numero: int) ->int:
     ultimo: int = numero % 10
     return ultimo
-# Ejercicio 3
+# Ejercicio 3 (Corregido)
 def reordenar_cola_primero_pesados(paquetes: Cola[tuple[str,int]], umbral:int) -> Cola[tuple[str,int]]:
     res: Cola[tuple[str,int]] = Cola()
-    cola_aux : list[tuple[str,int]] = Cola()
-    lista_aux: list[tuple[str,int]] = []
+    cola_aux : Cola[tuple[str,int]] = Cola()
+    cola_umbral: Cola[tuple[str,int]] = Cola()
     while not paquetes.empty():
         auxiliar: tuple[str,int] = paquetes.get()
         cola_aux.put(auxiliar)
         if auxiliar[1] > umbral:
             res.put(auxiliar)
         else:
-            lista_aux += auxiliar
+            cola_umbral.put(auxiliar)
     while not cola_aux.empty():
         paquetes.put(cola_aux.get())
-    while len(lista_aux) > 0:
-        res.put(lista_aux.pop())
+    while not cola_umbral.empty():
+        res.put(cola_umbral.get())
     return res
 
         
@@ -55,4 +55,4 @@ def ordenados(columna: list[int]) -> bool:
             res = False
             break
     return res
-print(ordenados([4,4,4]))
+

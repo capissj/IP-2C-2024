@@ -2,35 +2,35 @@ import unittest
 from queue import Queue as Cola
 from solucion import reordenar_cola_primero_pesados
 
-'''
-Ayudamemoria: entre los métodos para testear están los siguientes:
+"""
+#Ayudamemoria: entre los métodos para testear están los siguientes:
 
-    self.assertEqual(a, b) -> testea que a y b tengan el mismo valor
-    self.assertTrue(x)     -> testea que x sea True
-    self.assertFalse(x)    -> testea que x sea False
-    self.assertIn(a, b)    -> testea que a esté en b (siendo b una lista o tupla)
-'''
+    self.assertEqual(a, b) #-> testea que a y b tengan el mismo valor
+    self.assertTrue(x)     #-> testea que x sea True
+    self.assertFalse(x)    #-> testea que x sea False
+    self.assertIn(a, b)    #-> testea que a esté en b (siendo b una lista o tupla)
+"""
 
 
-class Ej3Test():
+class Ej3Test(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(Ej3Test, self).__init__(*args, **kwargs)
         self.method = reordenar_cola_primero_pesados
 
     def test_trivial(self):
         cola_entrada:Cola[tuple[str,int]] = Cola()
-        # cola_pre:Cola[tuple[str,int]] = copiar_cola(cola_entrada)
+        cola_pre:Cola[tuple[str,int]] = copiar_cola(cola_entrada)
         umbral:int = 0 
         res:Cola[tuple[str,int]] = reordenar_cola_primero_pesados(cola_entrada,umbral)
         self.assertTrue(res.empty())
 
         # La cola de entrada no se modifica
-        # self.assertEqual(cola_entrada.queue, cola_pre.queue)
+        self.assertEqual(cola_entrada.queue, cola_pre.queue)
     
     def test_un_paquete(self):
         cola_entrada:Cola[tuple[str,int]] = Cola()
         cola_entrada.put(('A', 10))
-        # cola_pre:Cola[tuple[str,int]] = copiar_cola(cola_entrada)
+        cola_pre:Cola[tuple[str,int]] = copiar_cola(cola_entrada)
         umbral:int = 10
         
         salida:Cola[tuple[str,int]] = Cola()
@@ -40,7 +40,7 @@ class Ej3Test():
         self.assertEqual(res.queue, salida.queue)
 
         # La cola de entrada no se modifica
-        # self.assertEqual(cola_entrada.queue, cola_pre.queue)
+        self.assertEqual(cola_entrada.queue, cola_pre.queue)
     
     def test_varios_paquetes_variado_peso(self):
         cola_entrada:Cola[tuple[str,int]] = Cola()
@@ -48,7 +48,7 @@ class Ej3Test():
         cola_entrada.put(('B', 10))
         cola_entrada.put(('C', 39))
         cola_entrada.put(('D', 41))
-        # cola_pre:Cola[tuple[str,int]] = copiar_cola(cola_entrada)
+        cola_pre:Cola[tuple[str,int]] = copiar_cola(cola_entrada)
         salida:Cola[tuple[str,int]] = Cola()
         salida.put(('A', 40))
         salida.put(('D', 41))
@@ -60,7 +60,7 @@ class Ej3Test():
         self.assertEqual(res.queue, salida.queue)
         
         # La cola de entrada no se modifica
-        # self.assertEqual(cola_entrada.queue, cola_pre.queue)
+        self.assertEqual(cola_entrada.queue, cola_pre.queue)
 
 
     def test_todos_ligeros(self):
@@ -91,12 +91,12 @@ def crear_cola(elementos):
     return cola
     
     
-# def copiar_cola(cola: Cola):
-#     elementos = list(cola.queue)
-#     nueva_cola = Cola()
-#     for e in elementos:
-#         nueva_cola.put(e)
-#     return nueva_cola
+def copiar_cola(cola: Cola):
+    elementos = list(cola.queue)
+    nueva_cola = Cola()
+    for e in elementos:
+        nueva_cola.put(e)
+    return nueva_cola
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

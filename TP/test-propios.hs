@@ -5,7 +5,8 @@ import Solucion
 
 
 runCatedraTests = runTestTT allTests
-
+ej7 = test ["puedoVolverAOrigen" ~: testsEjpuedoVolverAOrigen]
+testEj7 = runTestTT ej7
 allTests = test [
     "vuelosValidos" ~: testsEjvuelosValidos,
     "ciudadesConectadas" ~: testsEjciudadesConectadas,
@@ -20,63 +21,73 @@ allTests = test [
 
 testsEjvuelosValidos = test [ -- Ejercicio 1
     "lista vacía, caso base" ~: vuelosValidos [] ~?= True,
-    "agencia con vuelo válido" ~: vuelosValidos [("BsAs", "Rosario", 5.0)] ~?= True,
-    "agencia con un vuelo invalido" ~: vuelosValidos [("BsAs","BsAs",30.2)] ~?= False,
-    "vuelo con una duracion invalida" ~: vuelosValidos [("BsAs","Rosario",0)] ~?= False,
-    "vuelo con duracion negativa" ~: vuelosValidos [("BsAs","Rosrio",(-30))] ~?= False,
-    "vuelo totalmente invalido" ~: vuelosValidos [("BsAs", "BsAS", 0)] ~?= False,
-    "vuelos con dos elementos validos" ~: vuelosValidos [("BsAs","Rosario",30),("Rosario","Bsas",456)] ~?= True,
-    "vuelos con vuelos validos repetidos " ~: vuelosValidos [("BsAs","Rosario",25),("BsAs","Rosario",25)] ~?= False,
+    "vuelos válido con un elemento" ~: vuelosValidos [("BsAs", "Rosario", 5.0)] ~?= True,
+    "vuelos con un destino inválido" ~: vuelosValidos [("BsAs","BsAs",30.2)] ~?= False,
+    "vuelo con una duracion inválida" ~: vuelosValidos [("BsAs","Rosario",0)] ~?= False,
+    "vuelos con duracion negativa" ~: vuelosValidos [("BsAs","Rosrio",(-30))] ~?= False,
+    "vuelo totalmente inválido" ~: vuelosValidos [("BsAs", "BsAS", 0)] ~?= False,
+    "vuelos con dos elementos válidos" ~: vuelosValidos [("BsAs","Rosario",30),("Rosario","Bsas",456)] ~?= True,
+    "vuelos con vuelos válidos repetidos" ~: vuelosValidos [("BsAs","Rosario",25),("BsAs","Rosario",25)] ~?= False,
     "vuelos invalidos repetidos" ~: vuelosValidos [("BsAs","BsAs",0), ("BsAs","BsAs",0)] ~?= False,
     "vuelos iguales pero con distinta duracion" ~: vuelosValidos [("BsAs","Rosario",25),("BsAs","Rosario",30)] ~?= False,
-    "vuelos con un vuelo valido y otro invalido" ~: vuelosValidos [("BsAs","Rosario",30), ("BsAs","BsAs",30)] ~?= False,
-    "vuelo válido primero con vuelos inválidos despues" ~: vuelosValidos [("BsAs","Temperley",30), ("BsAs","Rosario",0), ("BsAs","BsAs",10), ("BsAs","Rosario",(-10))] ~?= False
+    "vuelos con un destino invalido y otro valido" ~: vuelosValidos [("BsAs","Rosario",30), ("BsAs","BsAs",30)] ~?= False,
+    "vuelos donde se repite el segundo " ~: vuelosValidos [("BsAs","Rosario",30), ("BsAs","Cordoba",30),("BsAs","Cordoba",32)] ~?= False,
+    "vuelos donde se repite el tercero " ~: vuelosValidos [("BsAs","Rosario",30), ("BsAs","Cordoba",30),("BsAs","Chubut",2.7),("BsAs","Chubut",8.2)] ~?= False
     ]
 
 testsEjciudadesConectadas = test [ -- Ejercicio 2
     "lista vacía, caso base" ~: ciudadesConectadas  [] "Rosario" ~?= [],
     "ciudad no conectada con ningun elemento" ~: ciudadesConectadas  [("BsAs", "Cordoba", 5.0), ("BsAs","Trelew", 10.0)] "Rosario" ~?= [],
     "ciudad conectada con un elemento" ~: ciudadesConectadas  [("BsAs", "Rosario", 5.0)] "Rosario" ~?= ["BsAs"],
- --   "ciudad con mas de un elemento" ~: expectPermutacion (ciudadesConectadas [("BsAs", "Rosario", 5.0), ("Rosario","Trelew", 10.0)] "Rosario") , (ciudadesConectadas [("Trelew", "Rosario", 5.0), ("Rosario","BsAs", 10.0)] "Rosario") ,
+    "ciudad con mas de un elemento" ~: expectPermutacion (ciudadesConectadas  [("BsAs", "Rosario", 5.0), ("Rosario","Trelew", 10.0)] "Rosario") (["Trelew","BsAs"]),
     "ciudad conectada con ciudades repetidas" ~: ciudadesConectadas  [("BsAs", "Rosario", 5.0), ("Rosario","BsAs", 10.0)] "Rosario" ~?= ["BsAs"],
-    "ciudad conectada con una sola ciudad" ~: ciudadesConectadas  [("Cordoba","Trelew", 10.0),("BsAs", "Rosario", 5.0)] "Rosario" ~?= ["BsAs"]
-    ]
+    "ciudad conectada con una sola ciudad" ~: ciudadesConectadas  [("Cordoba","Trelew", 10.0),("BsAs", "Rosario", 5.0)] "Rosario" ~?= ["BsAs"],
+    "ciudad conectada cuando se empata con otra ciudad" ~: expectPermutacion (ciudadesConectadas  [("BsAs", "Rosario", 5.0),("BsAS","Cordoba",8.9),("Chubut","Cordoba",8.9),("Chubut","Rosario",8.9)] "Rosario") (["BsAs","Chubut"])  
+   ]
 
 testsEjmodernizarFlota = test [ -- Ejercicio 3
     "lista vacía, con caso base" ~: modernizarFlota [] ~?= [],
     "flota modernizada con un elemento" ~: modernizarFlota [("BsAs", "Rosario", 10.0)] ~?= [("BsAs", "Rosario", 9.0)],
-    "flota modernizada con dos elementos" ~: modernizarFlota [("BsAs", "Rosario", 10.0), ("Trelew","BsAs", 20.0)] ~?= [("BsAs", "Rosario", 9.0),("Trelew","BsAs", 18.0)]
-    ]
+    "flota modernizada con dos elementos" ~: expectPermutacion (modernizarFlota [("BsAs", "Rosario", 10.0), ("Trelew","BsAs", 20.0)]) ([("BsAs", "Rosario", 9.0),("Trelew","BsAs", 18.0)]),
+    "flota modernizada con un elemento real" ~: modernizarFlota [("BsAs", "Rosario", (2**(1/2)))] ~?= [("BsAs", "Rosario",((2**(1/2))-(2**(1/2)*(1/10))))]  
+   ]
 
 testsEjciudadMasConectada = test [ -- Ejercicio 4
-    "ciudad mas conectada que aparece dos veces" ~: ciudadMasConectada [("BsAs", "Rosario", 10.0), ("Temperley", "Trelew", 15.0), ("Rosario", "Córdoba", 7.0)] ~?= "Rosario",
+    "ciudad Mas conectada que aparece dos veces" ~: ciudadMasConectada [("BsAs", "Rosario", 10.0), ("Rosario", "Córdoba", 7.0)] ~?= "Rosario",
     "una sola ciudad" ~: ciudadMasConectada [("BsAs", "Rosario", 10.0)] ~?= "BsAs",
-    "ciudad mas conectada empatan dos ciudades" ~: ciudadMasConectada [("BsAs", "Rosario", 10.0), ("Cordoba", "Trelew", 20.0), ("Rosario", "Córdoba", 7.0)] ~?= "Rosario",
-    "ciudad mas conectada empatan varias ciudades" ~: ciudadMasConectada [("BsAs", "Rosario", 10.0), ("Cordoba", "BsAs", 20.0), ("Rosario", "Córdoba", 7.0)] ~?= "Rosario"
+    "varias ciudades empatadas" ~: expectAny (ciudadMasConectada [("BsAs", "Rosario", 10.0), ("Rosario", "Córdoba", 7.0),("Trelew", "BsAs", 12.0), ("Trelew", "Gaiman", 11.0)]) (["BsAs", "Rosario", "Trelew"])
     ]
 
 testsEjsePuedeLlegar = test [ -- Ejercicio 5
     "Se puede llegar caso verdadero con una escala" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" "Córdoba" ~?= True,
     "No se puede llegar" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Trelew" "Córdoba" ~?= False,
     "Se puede llegar sin escala" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Córdoba" "BsAs" ~?= True,
-    "Se puede llegar con escala antes en la lista" ~: sePuedeLlegar [("Rosario", "Córdoba", 5.0),("BsAs", "Rosario", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" "Córdoba" ~?= True
+    "Se puede llegar con escala antes en la lista" ~: sePuedeLlegar [("Rosario", "Córdoba", 5.0),("BsAs", "Rosario", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" "Córdoba" ~?= True,
+    "Se puede llegar caso no se puede llegar de forma contraria" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Córdoba" "BsAs" ~?= True, 
+    "Se puede llegar caso verdadero con destino==origen" ~: sePuedeLlegar [("BsAs", "Córdoba", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Córdoba" "Córdoba" ~?= True,
+    "Se puede llegar caso False con destino==origen" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Cordoba" "Córdoba" ~?= False 
     ]
 
 testsEjduracionDelCaminoMasRapido = test [ -- Ejercicio 6
     "duración del camino más rápido con una escala" ~: duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" "Córdoba" ~?= 10.0,
-    "duracion del camino mas rapido cuando hay dos caminos" ~:duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("BsAs", "mendoza", 5.0),("mendoza","Cordoba",6.5),("Rosario","Cordoba",4.0)] "BsAs" "Cordoba" ~?= 9.0,
-    "duracion del camino mas largo con ruta directa"~:duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "mendoza", 5.0),("mendoza","tucuman",6.5),("BsAs","Cordoba",2.0)] "BsAs" "Cordoba" ~?=2.0,
-    "duracion del camino mas largo con mas de una ruta directa con diferente duracion" ~:duracionDelCaminoMasRapido [("BsAs", "Cordoba", 5.0), ("Rosario", "mendoza", 5.0),("BsAs","Cordoba",3.0)] "BsAs" "Cordoba" ~?=3.0,
-    "duracion del camino mas largo con ruta directa y escala"~:duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("BsAs","Cordoba",6.5)] "BsAs" "Cordoba" ~?=6.5,
-    "duracion del camino mas largo con ruta directa y escala"~:duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("BsAs","Cordoba",12.0)] "BsAs" "Cordoba" ~?=10.0
+    "duracion del camino mas rapido cuando hay dos caminos" ~: duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("BsAs", "mendoza", 5.0),("mendoza","Cordoba",6.5),("Rosario","Cordoba",4.0)] "BsAs" "Cordoba" ~?= 9.0,
+    "duracion del camino mas largo con ruta directa" ~: duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "mendoza", 5.0),("mendoza","tucuman",6.5),("BsAs","Cordoba",2.0)] "BsAs" "Cordoba" ~?= 2.0,
+    "duracion del camino mas largo con mas de una ruta directa con diferente duracion" ~: duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0),("BsAs", "Cordoba", 3.0), ("Rosario", "mendoza", 5.0),("mendoza","tucuman",6.5),("BsAs","Cordoba",7.0)] "BsAs" "Cordoba" ~?= 3.0,
+    "duracion del camino mas largo con ruta directa y escala" ~: duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("BsAs","Cordoba",6.5)] "BsAs" "Cordoba" ~?= 6.5,
+    "duracion del camino mas largo con ruta directa y escala" ~: duracionDelCaminoMasRapido [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("BsAs","Cordoba",12.0)] "BsAs" "Cordoba" ~?= 10.0
     ]
-    
+
 testsEjpuedoVolverAOrigen = test [ -- Ejercicio 7
     "puedo volver a origen caso verdadero con una escala" ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" ~?= True,
     "puedo volver a origen  caso verdadera con ruta directa"  ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "BsAs", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" ~?= True,
-    "puedo volver al origen caso verdadero con mas de una escala"  ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0),("Tucuman","BsAs",8.8)] "BsAs" ~?= True
+    "puedo volver al origen caso verdadero con mas de una escala"  ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0),("Tucuman","BsAs",8.8)] "BsAs" ~?= True,
+    "no se puede llegar a ningun lado agencia vacia" ~: puedoVolverAOrigen [] "BsAs" ~?= False,
+    "puedo volver al origen caso falso hay camino de ida pero no regreso"  ~: puedoVolverAOrigen  [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0)] "BsAs" ~?= False, 
+    "no puedo volver desde origen porque no existe ruta" ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0)] "mendoza" ~?= False,
+    "no existe ruta pero si existe un vuelo para salir de origen y otro para llegar a origen" ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Tucuman", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" ~?= False,
+    "no puedo volver desde destino porque no existe ruta" ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0)] "Tucuman" ~?= False ,   
+    "puedo volver al origen casa falso no hay camino de ida "  ~: puedoVolverAOrigen  [("tucuman", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0)] "BsAs" ~?= False 
     ]
-
 
 
 -- Funciones extras

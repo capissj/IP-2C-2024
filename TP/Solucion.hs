@@ -168,30 +168,31 @@ buscaVuelo (x:xs) c d | (origen x == c) && (destino x == d) = x
                       | otherwise = buscaVuelo xs c d
 
 
--- EJERCICIO 7 (Cumpliendo las restricciones)
-puedoVolverAOrigen :: AgenciaDeViajes -> Ciudad -> Bool
-puedoVolverAOrigen [] origen = False
-puedoVolverAOrigen agencia origenCiudad | not (vuelosValidos agencia) = False
-                                        | otherwise = dfs origenCiudad [origenCiudad]
-                                          where
-                                                dfs actual visitados =
-                                                   (actual == origenCiudad && length visitados > 1) ||
-                                                   tieneCamino conexiones visitados
-                                                   where
-                                                   conexiones = [ciudadDestino vuelo | vuelo <- agencia, ciudadOrigen vuelo == actual, not (elem (ciudadDestino vuelo) visitados)]
-                                                   tieneCamino [] _ = False
-                                                   tieneCamino (x:xs) visitados = dfs x (x : visitados) || tieneCamino xs visitados
-
--- Funciones auxiliares específicas para este ejercicio
-ciudadOrigen :: Vuelo -> Ciudad
-ciudadOrigen (origen, _, _) = origen
-
-ciudadDestino :: Vuelo -> Ciudad
-ciudadDestino (_, destino, _) = destino
-
-
-
+-- EJERCICIO 7
+puedoVolverAOrigen:: AgenciaDeViajes -> Ciudad -> Bool
+puedoVolverAOrigen agencia ori = existeUnCamino ori ori agencia && hayVueltas ori ori agencia
 -- Funciones auxiliares ej 7
+existeUnCamino :: Ciudad -> Ciudad ->  AgenciaDeViajes-> Bool
+existeUnCamino _ _ [] = False
+existeUnCamino estoy des (x:xs) | (estoy == origen x) && (des == destino x) = True
+                                | (estoy == origen x) = existeUnCamino (destino x) des xs
+                                | otherwise = existeUnCamino estoy des xs
+                             
+eliminarultimo:: (Eq t) => [t] -> [t]
+eliminarultimo [] = []
+eliminarultimo (x:xs) |  x==ultimo (x:xs) = (xs)
+                      | otherwise = x:eliminarultimo xs
+
+ultimo ::(Eq t) => [t] -> t
+ultimo [x] = x
+ultimo (x:xs)= ultimo xs
+
+hayVueltas :: Ciudad -> Ciudad -> AgenciaDeViajes -> Bool
+hayVueltas _ _ [] = False
+hayVueltas estoy des (x:xs) | estoy == destino(ultimo (x:xs)) && des == origen(ultimo(x:xs)) = True
+                            | estoy == destino(ultimo(x:xs)) = hayVueltas (origen(ultimo((x:xs)))) des (eliminarultimo (x:xs))
+                            | otherwise = hayVueltas estoy des (eliminarultimo (x:xs))
+
 eliminarVuelo :: AgenciaDeViajes -> Vuelo -> AgenciaDeViajes
 eliminarVuelo [] _ = []
 eliminarVuelo (x:xs) vuelo | (x == vuelo) = eliminarVuelo xs vuelo
