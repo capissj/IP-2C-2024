@@ -99,7 +99,14 @@ def cambiar_matriz(A: list[list[int]]) -> None:
         for j in range(len(auxiliar[0])):
             A[i][j] = conjunto[longitud - contador]
             contador += 1
-    return A
+    # return A (este return no deberia ir)
+mas_filas = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]
+mas_columnas = [ [1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15] ]
+#print(cambiar_matriz(mas_filas))
+cambiar_matriz(mas_columnas)
+print( mas_columnas )
+#print(cambiar_matriz([[]]))
+
 # Ejercicio 4
 def pertenece_str(lista: list[str], caracter: str) -> bool:
     res: bool = False
@@ -128,11 +135,14 @@ def separa_texto_en_palabras(texto: str) -> list[str]:
         if letra != " ":
             palabra += letra
         else:
-            palabras.append(palabra)
+            if len(palabra) != 0:
+                palabras.append(palabra)
             palabra = ""
+    #if len(palabra) != 0:
+    #    palabras.append(palabra)  
     return palabras
-#texto = "Hola Como  estas"
-#print (separa_texto_en_palabras(texto))
+texto = "Hola Como  estas"
+print (separa_texto_en_palabras(texto))
 
 def palabras_por_vocales(texto: str) -> dict[int, int]:
     auxiliar: str = texto
