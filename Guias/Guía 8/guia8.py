@@ -16,7 +16,9 @@ mostrar_pila(pila_prueba)
 #Ej 1
 def generar_numero_al_azar(cantidad:int, desde:int, hasta:int) -> Pila[int]:
     p:Pila[int] = Pila()
-    for i in range(cantidad):
+    contador: int = 0
+    while cantidad != contador:
+        contador += 1
         p.put(random.randint(desde, hasta))
     return p
 # El print comun y corriente no funciona, asi que creo uno que se llama "mostrar_pila"
