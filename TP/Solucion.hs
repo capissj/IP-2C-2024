@@ -1,8 +1,5 @@
 module Solucion where
 -- Nombre del equipo: VMJ
--- Integrante 1: Jonathan Salomonsky
--- Integrante 2: Micaela Ramos
--- Integrante 3: Valentin Capart
 type Ciudad = String
 type Duracion = Float
 type Vuelo = (Ciudad, Ciudad, Duracion)
