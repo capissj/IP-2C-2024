@@ -59,6 +59,7 @@ testsEjciudadMasConectada = test [ -- Ejercicio 4
     ]
 
 testsEjsePuedeLlegar = test [ -- Ejercicio 5
+    "Agencia vacía" ~: sePuedeLlegar [] "BsAs" "Córdoba" ~?= False,
     "Se puede llegar caso verdadero con una escala" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" "Córdoba" ~?= True,
     "No se puede llegar" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Trelew" "Córdoba" ~?= False,
     "Se puede llegar sin escala" ~: sePuedeLlegar [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "Córdoba" "BsAs" ~?= True,
@@ -79,7 +80,7 @@ testsEjduracionDelCaminoMasRapido = test [ -- Ejercicio 6
 
 testsEjpuedoVolverAOrigen = test [ -- Ejercicio 7
     "puedo volver a origen caso verdadero con una escala" ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" ~?= True,
-    "puedo volver a origen  caso verdadera con ruta directa"  ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "BsAs", 5.0), ("Córdoba", "BsAs", 8.0)] "BsAs" ~?= True,
+    "puedo volver a origen  caso verdadera con ruta directa"  ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "BsAs", 5.0)] "BsAs" ~?= True,
     "puedo volver al origen caso verdadero con mas de una escala"  ~: puedoVolverAOrigen [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0),("Tucuman","BsAs",8.8)] "BsAs" ~?= True,
     "no se puede llegar a ningun lado agencia vacia" ~: puedoVolverAOrigen [] "BsAs" ~?= False,
     "puedo volver al origen caso falso hay camino de ida pero no regreso"  ~: puedoVolverAOrigen  [("BsAs", "Rosario", 5.0), ("Rosario", "Córdoba", 5.0), ("Córdoba", "Tucuman", 8.0)] "BsAs" ~?= False, 

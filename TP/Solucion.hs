@@ -82,7 +82,6 @@ mejoraDeVuelo (x,y,z) = (x,y,z - 1/10 *z)
 
 -- EJERCICIO 4
 ciudadMasConectada :: AgenciaDeViajes -> Ciudad -- Indica cual es la ciudad mas conectada
-ciudadMasConectada [] = "Lista vacía"
 ciudadMasConectada agencia = maximoTuplas (tuplaDeCiudades agencia)
 --Funciones auxiliares ej 4
 
@@ -167,7 +166,6 @@ buscaVuelo [] c d = (" ", " ", 111111110)
 buscaVuelo (x:xs) c d | (origen x == c) && (destino x == d) = x
                       | otherwise = buscaVuelo xs c d
 
-
 -- EJERCICIO 7
 puedoVolverAOrigen:: AgenciaDeViajes -> Ciudad -> Bool
 puedoVolverAOrigen agencia ori = existeUnCamino ori ori agencia && hayVueltas ori ori agencia
@@ -192,11 +190,3 @@ hayVueltas _ _ [] = False
 hayVueltas estoy des (x:xs) | estoy == destino(ultimo (x:xs)) && des == origen(ultimo(x:xs)) = True
                             | estoy == destino(ultimo(x:xs)) = hayVueltas (origen(ultimo((x:xs)))) des (eliminarultimo (x:xs))
                             | otherwise = hayVueltas estoy des (eliminarultimo (x:xs))
-
-eliminarVuelo :: AgenciaDeViajes -> Vuelo -> AgenciaDeViajes
-eliminarVuelo [] _ = []
-eliminarVuelo (x:xs) vuelo | (x == vuelo) = eliminarVuelo xs vuelo
-                           | otherwise = [x] ++ eliminarVuelo xs vuelo
-
--- Funciones útiles: interseccion, ciudadesConectadas, buscaVuelo, deDondeSale, aDondeLlega, escalas, sePuedeLlegar y eliminarVuelo
-

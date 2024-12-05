@@ -172,6 +172,11 @@ def agrupar_por_longitud(nombre_archivo: str) -> dict:
     return res
 def palabras(s:list[str]) -> list[str]:
     return s.split(" ") #TODO implementar
+# Ej 17
+def calcular_promedio_por_estudiante(notas: list[tuple[str, float]]) -> dict[str, float]:
+    res: dict[str, float] = {}
+    return res
+
 # Ej 18
 def la_palabra_mas_frecuente(nombre_archivo: str) -> str:
     res: dict [str, int] = ()

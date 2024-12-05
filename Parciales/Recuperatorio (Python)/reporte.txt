@@ -1,0 +1,368 @@
+Parcial - tema2
+
+Nota: 8.19 / 10.0 (APROBADO)
+
+puntaje ej1: 2.25
+puntaje ej2: 0.45
+puntaje ej3: 2.25
+puntaje ej4: 2.25
+puntaje ej5: 1
+
+Maquina: 55-04
+Enunciado
+Recuperatorio Python - Tema 2
+Importante
+
+    El parcial se aprueba con 6 puntos
+    Template de funciones a implementar acá
+    Lista de funciones permitidas acá
+    Para testear el código pueden usar este archivo que ya cuenta con todo lo necesario para desarrollar sus propios tests (este archivo no se entrega)
+
+Implementar las siguientes especificaciones en Python.
+1) Ejercicio 1 [2.25 puntos]
+
+problema maximas_cantidades_consecutivos (in v: seq⟨Z⟩) : Diccionario⟨Z,Z⟩ {
+  requiere: { True }
+  asegura: { Las claves de res son exactamente los números que aparecen al menos una vez en v }
+  asegura: { Para cada clave k de res, su valor es igual a la máxima cantidad de apariciones consecutivas de k en v, donde dicha cantidad de apariciones es mayor o igual 1. }
+}
+2) Ejercicio 2 [2.25 puntos]
+
+problema maxima_cantidad_primos(in A: seq⟨seq⟨Z⟩⟩) : Z {
+  requiere: { Todas las filas de A tienen la misma longitud }
+  asegura: { Existe alguna columna c en A para la cual res de sus elementos son números primos }
+  asegura: { Todas las columnas de A tienen a lo sumo res elementos que son números primos }
+}
+
+3) Ejercicio 3 [2.25 puntos]
+Dadas las siguientes definiciones:
+
+    Tupla positiva: par de números enteros en el cual el producto de ambos números es positivo. Ejemplo: (2,3)
+    Tupla negativa: par de números enteros en el cual el producto de ambos números es negativo. Ejemplo: (3,-2)
+    Tupla nula: par de números enteros en el cual el producto de ambos números es igual a cero. Ejemplo: (0,0)
+
+Se pide resolver:
+
+problema tuplas_positivas_y_negativas(inout c: Cola⟨ZxZ⟩ ) {
+  requiere: { c no tiene tuplas repetidas }
+  modifica: { c }
+  asegura: { c contiene todas las tuplas positivas y todas las tuplas negativas de c@pre y además no contiene ninguna otra tupla }
+  asegura: { No hay niguna tupla negativa en c que aparezca antes que alguna tupla positiva }
+  asegura: { Para todas las tuplas positivas t1 y t2 en c, con t1 != t2, si t1 aparece antes que t2 en c@pre, entonces t1 aparece antes que t2 en c }
+  asegura: { Para todas las tuplas negativas t1 y t2 en c, con t1 != t2, si t1 aparece antes que t2 en c@pre, entonces t1 aparece antes que t2 en c }
+}
+4) Ejercicio 4 [2.25 puntos]
+
+problema resolver_cuenta(in s: string): R {
+  requiere: { Cada caracter de s es '+', '-', '.' (separador decimal) o es un dígito }
+  requiere: { No hay dos operadores consecutivos en s (los operadores son '+' y '-') }
+  requiere: { El último caracter de s es un dígito }
+  requiere: { El primer caracter de s es un dígito o un operador }
+  requiere: { En las posiciones adyacentes a cada aparición de '.' en s, hay un dígito }
+  requiere: { Entre un operador y el operador inmediato siguiente hay a lo sumo un separador decimal }
+  requiere: { Antes del primer operador hay a lo sumo un separador decimal }
+  requiere: { Después del último operador hay a lo sumo un separador decimal }
+  asegura: { res es igual al resultado de la operación aritmética representada por s }
+}
+Hint: las funciones int o float permiten convertir strings en números enteros o flotantes respectivamente.
+Ejemplo: Para el input "+10" se debe devolver 10.
+5) Pregunta teórica (1 punto)
+
+Conteste marcando la opción correcta.
+La principal diferencia entre testing de caja blanca y de caja negra es que en testing de caja blanca tenemos acceso a:
+
+Al código fuente del programa que queremos testear (X)
+A la documentación del programa que queremos testear
+Al Control Flow Graph (CFG) del programa que queremos testear
+
+
+Solucion entregada por el alumno
+
+from queue import Queue as Cola
+
+# Ejercicio 1
+def maximas_cantidades_consecutivos (v: list[int]) -> dict[int,int]:
+    res: dict[int, int] = {}
+    for i in v:
+        if not pertenece_enteros(res.keys(), i):
+            res[i] = apariciones_consecutivas(v, i)
+    return res
+def apariciones_consecutivas(s: list[int], elem: int) -> int:
+    actual: int = 1
+    maximo: int = 1
+    for i in range(len(s)-1):
+        if s[i] == s[i + 1] and s[i] == elem:
+            actual += 1
+        else:
+            if actual > maximo:
+                maximo = actual
+                actual = 1
+    if actual > maximo:
+        maximo = actual
+    return maximo
+def pertenece_enteros(s: list[int], elem: int) -> bool:
+    res: bool = False
+    for i in s:
+        if i == elem:
+            res = True
+            break
+    return res
+#s = [1,1,2,3,4,4,5,5,7,7,30,30,30,7,8,8]
+#print (maximas_cantidades_consecutivos(s))
+# Ejercicio 2
+def maxima_cantidad_primos( A: list[list[int]]) -> int:
+    res: int = 0
+    actual: int = 0
+    for i in range(len(A)):
+        for j in range(len(A[0])):
+            if es_primo(A[j][i]):
+                actual += 1
+        if actual > res:
+            res = actual
+            actual = 0
+        else:
+            actual = 0
+    return res
+def es_primo(n: int) -> bool:
+    if n < 2:
+        return False
+    for divisor in range(2,n-1,1):
+        if n % divisor  == 0:
+            return False
+    return True
+#A = [[7,1,1],[2,1,1],[5,1,1]]
+#print(maxima_cantidad_primos(A))
+# Ejercicio 3
+def tuplas_positivas_y_negativas(c: Cola[tuple[int, int]]) -> None:
+    lista_positivos: list[tuple[int, int]] = []
+    lista_negativos: list[tuple[int, int]] = []
+    lista_nulos: list[tuple[int, int]] = []
+    while not c.empty():
+        auxiliar: tuple[int, int] = c.get()
+        if auxiliar[0] * auxiliar[1] > 0:
+            lista_positivos.append(auxiliar)
+        elif auxiliar[0] * auxiliar[1] < 0:
+            lista_negativos.append(auxiliar)
+        else:
+            lista_nulos.append(auxiliar)
+    for i in lista_positivos:
+        c.put(i)
+    for i in lista_negativos:
+        c.put(i)
+def imprimir_cola(c: Cola[tuple[int, int]]) -> None:
+    cola_aux: Cola[tuple[int, int]] = Cola()
+    while not c.empty():
+        auxiliar: tuple[int, int] = c.get()
+        print(auxiliar)
+        cola_aux.put(auxiliar)
+    while not cola_aux.empty():
+        c.put(cola_aux.get())
+
+#c = Cola()
+#c.put([4,5])
+#c.put([0,5])
+#c.put([-4,5])
+#c.put([4,0])
+#c.put([4,-5])
+#c.put([5,4])
+#print (imprimir_cola(c))
+#print("########################")
+#tuplas_positivas_y_negativas(c)
+#print(imprimir_cola(c)) #"""
+# Ejercicio 4
+def resolver_cuenta(s: str) -> float:
+    res: float = 0
+    numeros: str = ""
+    lista: list[str] = ["0","1","2","3","4","5","6","7","8","9"]
+    for caracter in s:
+        if (caracter == "+" or caracter == "-") and numeros != "":
+            res = res + float(numeros)
+            numeros: str = ""
+            numeros += caracter
+        else:
+            numeros += caracter
+    if len(numeros) > 0:
+        res = res + float(numeros)
+    return res
+#print(resolver_cuenta("10-20.5"))
+
+Resultado de la compilacion
+
+
+Ejecucion de los tests
+tema2-test-ej1.py.compilacion.out
+
+Puntaje del ej: 2.25 / 2.25
+
+test_maxima_aparicion_al_final (__main__.Ej1Test.test_maxima_aparicion_al_final) ... ok
+test_maxima_aparicion_al_inicio (__main__.Ej1Test.test_maxima_aparicion_al_inicio) ... ok
+test_maxima_aparicion_al_medio (__main__.Ej1Test.test_maxima_aparicion_al_medio) ... ok
+test_numeros_negativos (__main__.Ej1Test.test_numeros_negativos) ... ok
+test_sec_vacia (__main__.Ej1Test.test_sec_vacia) ... ok
+test_todos_aparecen_una_sola_vez (__main__.Ej1Test.test_todos_aparecen_una_sola_vez) ... ok
+test_un_unico_elemento (__main__.Ej1Test.test_un_unico_elemento) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+OK
+
+tema2-test-ej2.py.compilacion.out
+
+Puntaje del ej: 0.45 / 2.25
+
+test_columnas_con_distinta_longitud_que_fila (__main__.Ej2Test.test_columnas_con_distinta_longitud_que_fila) ... ERROR
+test_matriz_con_un_no_primo (__main__.Ej2Test.test_matriz_con_un_no_primo) ... ok
+test_matriz_con_un_primo (__main__.Ej2Test.test_matriz_con_un_primo) ... ok
+test_matriz_cuadrada (__main__.Ej2Test.test_matriz_cuadrada) ... ok
+test_max_primos_en_el_medio (__main__.Ej2Test.test_max_primos_en_el_medio) ... ERROR
+test_max_primos_en_el_medio_en_2_columas (__main__.Ej2Test.test_max_primos_en_el_medio_en_2_columas) ... ERROR
+test_negativos (__main__.Ej2Test.test_negativos) ... ok
+test_unica_columna (__main__.Ej2Test.test_unica_columna) ... ERROR
+test_unica_fila_con_primos (__main__.Ej2Test.test_unica_fila_con_primos) ... ERROR
+test_unica_fila_sin_primos (__main__.Ej2Test.test_unica_fila_sin_primos) ... ERROR
+
+======================================================================
+ERROR: test_columnas_con_distinta_longitud_que_fila (__main__.Ej2Test.test_columnas_con_distinta_longitud_que_fila)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./venv/lib/python3.12/site-packages/timeout_decorator/timeout_decorator.py", line 82, in new_function
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/tema2-test-ej2.py", line 39, in test_columnas_con_distinta_longitud_que_fila
+    self.assertEqual(maxima_cantidad_primos(entrada), salida_esperada)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/solucion.py", line 38, in maxima_cantidad_primos
+    if es_primo(A[j][i]):
+                ~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_max_primos_en_el_medio (__main__.Ej2Test.test_max_primos_en_el_medio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./venv/lib/python3.12/site-packages/timeout_decorator/timeout_decorator.py", line 82, in new_function
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/tema2-test-ej2.py", line 83, in test_max_primos_en_el_medio
+    self.assertEqual(maxima_cantidad_primos(entrada), salida_esperada)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/solucion.py", line 38, in maxima_cantidad_primos
+    if es_primo(A[j][i]):
+                ~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_max_primos_en_el_medio_en_2_columas (__main__.Ej2Test.test_max_primos_en_el_medio_en_2_columas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./venv/lib/python3.12/site-packages/timeout_decorator/timeout_decorator.py", line 82, in new_function
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/tema2-test-ej2.py", line 94, in test_max_primos_en_el_medio_en_2_columas
+    self.assertEqual(maxima_cantidad_primos(entrada), salida_esperada)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/solucion.py", line 38, in maxima_cantidad_primos
+    if es_primo(A[j][i]):
+                ~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_unica_columna (__main__.Ej2Test.test_unica_columna)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./venv/lib/python3.12/site-packages/timeout_decorator/timeout_decorator.py", line 82, in new_function
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/tema2-test-ej2.py", line 49, in test_unica_columna
+    self.assertEqual(maxima_cantidad_primos(entrada), salida_esperada)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/solucion.py", line 38, in maxima_cantidad_primos
+    if es_primo(A[j][i]):
+                ~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_unica_fila_con_primos (__main__.Ej2Test.test_unica_fila_con_primos)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./venv/lib/python3.12/site-packages/timeout_decorator/timeout_decorator.py", line 82, in new_function
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/tema2-test-ej2.py", line 56, in test_unica_fila_con_primos
+    self.assertEqual(maxima_cantidad_primos(entrada), salida_esperada)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/solucion.py", line 38, in maxima_cantidad_primos
+    if es_primo(A[j][i]):
+                ~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_unica_fila_sin_primos (__main__.Ej2Test.test_unica_fila_sin_primos)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./venv/lib/python3.12/site-packages/timeout_decorator/timeout_decorator.py", line 82, in new_function
+    return function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/tema2-test-ej2.py", line 63, in test_unica_fila_sin_primos
+    self.assertEqual(maxima_cantidad_primos(entrada), salida_esperada)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./correcciones/python-recu-tm/capart_valentin_43754372/solucion.py", line 38, in maxima_cantidad_primos
+    if es_primo(A[j][i]):
+                ~^^^
+IndexError: list index out of range
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+FAILED (errors=6)
+
+tema2-test-ej3.py.compilacion.out
+
+Puntaje del ej: 2.25 / 2.25
+
+test_elimina_tuplas_nulas (__main__.Ej3Test.test_elimina_tuplas_nulas) ... ok
+test_todas_neativas_queda_igual (__main__.Ej3Test.test_todas_neativas_queda_igual) ... ok
+test_todas_nulas (__main__.Ej3Test.test_todas_nulas) ... ok
+test_todas_positivas_queda_igual (__main__.Ej3Test.test_todas_positivas_queda_igual) ... ok
+test_tuplas_intercaladas (__main__.Ej3Test.test_tuplas_intercaladas) ... ok
+test_tuplas_negativas_antes_que_positivas (__main__.Ej3Test.test_tuplas_negativas_antes_que_positivas) ... ok
+test_tuplas_negativas_antes_que_positivas_y_nulas (__main__.Ej3Test.test_tuplas_negativas_antes_que_positivas_y_nulas) ... ok
+test_vacio (__main__.Ej3Test.test_vacio) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.006s
+
+OK
+
+tema2-test-ej4.py.compilacion.out
+
+Puntaje del ej: 2.25 / 2.25
+
+test_cuenta_comienza_con_caracter_negativo (__main__.Ej4Test.test_cuenta_comienza_con_caracter_negativo) ... ok
+test_cuenta_comienza_con_caracter_positivo (__main__.Ej4Test.test_cuenta_comienza_con_caracter_positivo) ... ok
+test_cuenta_comienza_con_digito (__main__.Ej4Test.test_cuenta_comienza_con_digito) ... ok
+test_cuenta_con_operacion_punto_con_multiple_digitos (__main__.Ej4Test.test_cuenta_con_operacion_punto_con_multiple_digitos) ... ok
+test_cuenta_resultado_negativo (__main__.Ej4Test.test_cuenta_resultado_negativo) ... ok
+test_cuenta_resultado_positivo (__main__.Ej4Test.test_cuenta_resultado_positivo) ... ok
+test_cuenta_solo_restas (__main__.Ej4Test.test_cuenta_solo_restas) ... ok
+test_cuenta_solo_restas_decimales (__main__.Ej4Test.test_cuenta_solo_restas_decimales) ... ok
+test_cuenta_solo_sumas (__main__.Ej4Test.test_cuenta_solo_sumas) ... ok
+test_cuenta_solo_sumas_decimales (__main__.Ej4Test.test_cuenta_solo_sumas_decimales) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.001s
+
+OK
+
+mchoice.json-ej5.compilacion.out
+
+Puntaje del ej: 1 / 1
+
+mchoice ej5: respuesta del alumno=1, respuesta correcta=1
+
+Ran 1 test in 0 seconds
+
+OK
+
+FIN

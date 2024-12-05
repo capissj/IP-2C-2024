@@ -11,7 +11,7 @@ Ayudamemoria: entre los métodos para testear están los siguientes:
     self.assertIn(a, b)    -> testea que a esté en b (siendo b una lista o tupla)
 '''
 
-class Ej2Test():
+class Ej2Test(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(Ej2Test, self).__init__(*args, **kwargs)
         self.method = mejor_resultado_de_ana
